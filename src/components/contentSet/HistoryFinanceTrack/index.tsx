@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Tag } from './styles';
 
 interface IHistoryFunanceTrackProps {
-  cardColor: string
   tagColor: string
   title: string
   subtitle: string
@@ -10,14 +9,13 @@ interface IHistoryFunanceTrackProps {
 }
 
 const HistoryFinanceTrack: React.FC<IHistoryFunanceTrackProps> = ({
-  cardColor,
   tagColor,
   title,
   subtitle,
   amount
 }) => {
   return (
-    <Container color={cardColor}>
+    <Container>
       <Tag color={tagColor}/>
       <div>
         <span>{title}</span>
