@@ -1,8 +1,14 @@
-import React, {useMemo} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
+import  { uuid } from 'uuidv4'
 import ContentHeader from '../../components/contentSet/ContentHeader';
 import HistoryFinanceTrack from '../../components/contentSet/HistoryFinanceTrack';
 import SelectInput from '../../components/contentSet/SelectInput';
 import { Container, Content, Filters } from './styles';
+import gains from '../../DB/gains'
+import expenses from '../../DB/expenses'
+import formatCurrency from '../../utils/formatCurrency'
+import formatDate from '../../utils/formatDate'
+import monthsList from '../../utils/months'
 
 interface IRouteParams {
   match: {
@@ -12,62 +18,146 @@ interface IRouteParams {
   }
 }
 
-const List: React.FC<IRouteParams> = ({ match }) => {
+interface IData {
+  description: string
+  amountFormatted: string
+  frequency: string
+  dataFormatted: string
+  tagColor: string
+  id: string
+}
 
+const List: React.FC<IRouteParams> = ({ match }) => {
+  const [data, setData] = useState<IData[]>([])
+  const [allData, setAlldata] = useState<any>()
+  const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
+  const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
   const { type } = match.params
+
+  useEffect(() => {
+    let arr: any = []
+
+    if (type === 'entry-balance') {
+      arr = gains
+    } else if (type === 'exit-balance') {
+      arr = expenses
+    }
+    setAlldata(arr)
+
+    const filteredData = arr.filter((i: any) => {
+      const date = new Date(i.date)
+      const month = date.getMonth() + 1
+      const year = date.getFullYear()
+
+      return month === selectedMonth && year === selectedYear
+    })
+
+    const formatedData = filteredData.map((i: any) => {
+      return {
+        id: uuid(),
+        description: i.description,
+        amountFormatted: formatCurrency(Number(i.amount)),
+        frequency: i.frequency,
+        dataFormatted: formatDate(i.date),
+        tagColor: i.frequency === 'eventual' ? '#4E41F0' : '#E44C4E'
+      }
+    })
+
+    setData(formatedData)
+  }, [selectedYear, selectedMonth])
+
 
   const typeFromUrl = useMemo(() => {
     return type === 'entry-balance' ?
       {
         title: 'Incomes',
-        lineColor: '#f7931B'
+        lineColor: '#f7931B',
+        // data: gains
       } 
     : 
       {
         title: 'Expenses',
-        lineColor: '#E44C4E'
+        lineColor: '#E44C4E',
+        // data: expenses
       }
   }, [type])
 
-  const months = [
-    {
-      value: 7,
-      label: 'July'
-    },
-    {
-      value: 8,
-      label: 'August'
-    },
-    {
-      value: 9,
-      label: 'September'
-    },
-  ]
 
-  const years = [
-    {
-      value: 2021,
-      label: 2021
-    },
-    {
-      value: 2020,
-      label: 2020
-    },
-    {
-      value: 2019,
-      label: 2019
-    },
-    {
-      value: 2018,
-      label: 2018
-    },
-  ]
+
+  // const years = [
+  //   {
+  //     value: 2021,
+  //     label: 2021
+  //   },
+  //   {
+  //     value: 2020,
+  //     label: 2020
+  //   },
+  //   {
+  //     value: 2019,
+  //     label: 2019
+  //   },
+  //   {
+  //     value: 2018,
+  //     label: 2018
+  //   },
+  // ]
+
+  const years = useMemo(() => {
+    let uniqueYears: number[] = []
+
+    if (type === 'entry-balance') {
+      gains.forEach(i => {
+        const date = new Date(i.date)
+        const year = date.getFullYear()
+
+        if (!uniqueYears.includes(year)) {
+          uniqueYears.push(year)
+        }
+      })
+    } else if (type === 'exit-balance') {
+      expenses.forEach(i => {
+        const date = new Date(i.date)
+        const year = date.getFullYear()
+
+        if (!uniqueYears.includes(year)) {
+          uniqueYears.push(year)
+        }
+      })
+    }
+  
+
+    return uniqueYears.map(year => {
+      return {
+        value: year,
+        label: year
+      }
+    })
+
+  }, [])
+
+  const months = useMemo(() => {
+    return monthsList.map((month, index) => {
+      return {
+        value: index + 1,
+        label: month,
+      }
+    })
+  }, [])
 
   return (
     <Container>
       <ContentHeader title={typeFromUrl.title} lineColor={typeFromUrl.lineColor}>
-        <SelectInput options={months}/>
-        <SelectInput options={years}/>
+        <SelectInput 
+          options={months}
+          onChange={(e) => setSelectedMonth(Number(e.target.value))}
+          defaultValue={selectedMonth}
+          />
+        <SelectInput 
+          options={years} 
+          onChange={(e) => setSelectedYear(Number(e.target.value))}
+          defaultValue={selectedYear}
+          />
       </ContentHeader>
 
       <Filters>
@@ -76,12 +166,18 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       </Filters>
 
       <Content>
-        <HistoryFinanceTrack 
-          amount='14,350.00'
-          subtitle='27/07/2021'
-          tagColor='#E44C4E'
-          title='Macbook pro 2021'
-        />
+        
+        {
+          data?.map(i => (
+            <HistoryFinanceTrack 
+              key={i.id}
+              amount={i.amountFormatted}
+              subtitle={i.dataFormatted}
+              tagColor={i.tagColor}
+              title={i.description}
+            />
+          ))
+        }
         
       </Content>
     </Container>

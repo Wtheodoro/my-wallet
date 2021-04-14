@@ -24,7 +24,6 @@ const Dashboard = () => {
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#F7931B">
-        <SelectInput options={options}/>
       </ContentHeader>
     </Container>
   )
