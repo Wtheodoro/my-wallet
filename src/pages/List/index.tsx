@@ -29,9 +29,9 @@ interface IData {
 
 const List: React.FC<IRouteParams> = ({ match }) => {
   const [data, setData] = useState<IData[]>([])
-  const [allData, setAlldata] = useState<any>()
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
+  const [selectedFrequency, setSelectedFrequency] = useState<String[]>(['recurrent', 'eventual'])
   const { type } = match.params
 
   useEffect(() => {
@@ -42,14 +42,13 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     } else if (type === 'exit-balance') {
       arr = expenses
     }
-    setAlldata(arr)
 
     const filteredData = arr.filter((i: any) => {
       const date = new Date(i.date)
       const month = date.getMonth() + 1
       const year = date.getFullYear()
 
-      return month === selectedMonth && year === selectedYear
+      return month === selectedMonth && year === selectedYear && selectedFrequency.includes(i.frequency)
     })
 
     const formatedData = filteredData.map((i: any) => {
@@ -59,12 +58,12 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         amountFormatted: formatCurrency(Number(i.amount)),
         frequency: i.frequency,
         dataFormatted: formatDate(i.date),
-        tagColor: i.frequency === 'eventual' ? '#4E41F0' : '#E44C4E'
+        tagColor: i.frequency === 'eventual' ? '#E44C4E' : '#4E41F0'
       }
     })
 
     setData(formatedData)
-  }, [selectedYear, selectedMonth])
+  }, [selectedYear, selectedMonth, selectedFrequency])
 
 
   const typeFromUrl = useMemo(() => {
@@ -81,27 +80,6 @@ const List: React.FC<IRouteParams> = ({ match }) => {
         // data: expenses
       }
   }, [type])
-
-
-
-  // const years = [
-  //   {
-  //     value: 2021,
-  //     label: 2021
-  //   },
-  //   {
-  //     value: 2020,
-  //     label: 2020
-  //   },
-  //   {
-  //     value: 2019,
-  //     label: 2019
-  //   },
-  //   {
-  //     value: 2018,
-  //     label: 2018
-  //   },
-  // ]
 
   const years = useMemo(() => {
     let uniqueYears: number[] = []
@@ -145,6 +123,17 @@ const List: React.FC<IRouteParams> = ({ match }) => {
     })
   }, [])
 
+  const handleFrequencyClick = (frequency: string) => {
+    const alreadySelected = selectedFrequency.findIndex(item => item === frequency)
+
+    if (alreadySelected >= 0) {
+      const filtered = selectedFrequency.filter(i => i !== frequency)
+      setSelectedFrequency(filtered)
+    } else {
+      setSelectedFrequency([...selectedFrequency, frequency])
+    }
+  }
+
   return (
     <Container>
       <ContentHeader title={typeFromUrl.title} lineColor={typeFromUrl.lineColor}>
@@ -161,8 +150,20 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       </ContentHeader>
 
       <Filters>
-        <button type="button" className="tag-filter tag-filter-recurrent">Recurrents</button>
-        <button type="button" className="tag-filter tag-filter-eventual">Eventual</button>
+        <button 
+          type="button"
+          className={`tag-filter tag-filter-recurrent
+          ${selectedFrequency.includes('recurrent') && 'tag-actived'}`}
+          onClick={() => handleFrequencyClick('recurrent')}
+          >Recurrents
+        </button>
+        <button
+          type="button"
+          className={`tag-filter tag-filter-eventual
+          ${selectedFrequency.includes('eventual') && 'tag-actived'}`}
+          onClick={() => handleFrequencyClick('eventual')}
+          >Eventual
+        </button>
       </Filters>
 
       <Content>

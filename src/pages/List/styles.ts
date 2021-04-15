@@ -20,6 +20,7 @@ export const Filters = styled.div`
         background: none;
         color: ${props => props.theme.colors.font};
         margin: 0 .6rem;
+        opacity: .4;
         transition: opacity .3s;
 
         &:hover {
@@ -36,10 +37,14 @@ export const Filters = styled.div`
     }
 
     .tag-filter-recurrent::after {
-        border-bottom: .6rem solid ${props => props.theme.colors.warning}
+        border-bottom: .6rem solid ${props => props.theme.colors.success}
     }
 
     .tag-filter-eventual::after {
-        border-bottom: .6rem solid ${props => props.theme.colors.success}
+        border-bottom: .6rem solid ${props => props.theme.colors.warning}
+    }
+
+    .tag-actived {
+        opacity: 1;
     }
 `;
