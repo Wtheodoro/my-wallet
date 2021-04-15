@@ -10,7 +10,7 @@ import formatCurrency from '../../utils/formatCurrency'
 import formatDate from '../../utils/formatDate'
 import monthsList from '../../utils/months'
 
-interface IRouteParams {
+export interface IRouteParams {
   match: {
     params: {
       type: string
@@ -133,12 +133,12 @@ const List: React.FC<IRouteParams> = ({ match }) => {
           options={months}
           onChange={(e) => setSelectedMonth(Number(e.target.value))}
           defaultValue={selectedMonth}
-          />
+        />
         <SelectInput 
           options={years} 
           onChange={(e) => setSelectedYear(Number(e.target.value))}
           defaultValue={selectedYear}
-          />
+        />
       </ContentHeader>
 
       <Filters>
