@@ -22,62 +22,30 @@ interface IData {
   description: string
   amountFormatted: string
   frequency: string
-  dataFormatted: string
+  dateFormatted: string
   tagColor: string
   id: string
 }
 
 const List: React.FC<IRouteParams> = ({ match }) => {
-  const [data, setData] = useState<IData[]>([])
+  const [data, setData] = useState<IData[]>()
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
   const [selectedFrequency, setSelectedFrequency] = useState<String[]>(['recurrent', 'eventual'])
   const { type } = match.params
-
-  useEffect(() => {
-    let arr: any = []
-
-    if (type === 'entry-balance') {
-      arr = gains
-    } else if (type === 'exit-balance') {
-      arr = expenses
-    }
-
-    const filteredData = arr.filter((i: any) => {
-      const date = new Date(i.date)
-      const month = date.getMonth() + 1
-      const year = date.getFullYear()
-
-      return month === selectedMonth && year === selectedYear && selectedFrequency.includes(i.frequency)
-    })
-
-    const formatedData = filteredData.map((i: any) => {
-      return {
-        id: uuid(),
-        description: i.description,
-        amountFormatted: formatCurrency(Number(i.amount)),
-        frequency: i.frequency,
-        dataFormatted: formatDate(i.date),
-        tagColor: i.frequency === 'eventual' ? '#E44C4E' : '#4E41F0'
-      }
-    })
-
-    setData(formatedData)
-  }, [selectedYear, selectedMonth, selectedFrequency])
-
 
   const typeFromUrl = useMemo(() => {
     return type === 'entry-balance' ?
       {
         title: 'Incomes',
         lineColor: '#f7931B',
-        // data: gains
+        data: gains
       } 
     : 
       {
         title: 'Expenses',
         lineColor: '#E44C4E',
-        // data: expenses
+        data: expenses
       }
   }, [type])
 
@@ -112,7 +80,7 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       }
     })
 
-  }, [])
+  }, [type])
 
   const months = useMemo(() => {
     return monthsList.map((month, index) => {
@@ -122,6 +90,30 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       }
     })
   }, [])
+
+  useEffect(() => {    
+    const { data } = typeFromUrl
+
+    const filteredData = data.filter((i: any) => {
+      const date = new Date(i.date)
+      const month = date.getMonth() + 1
+      const year = date.getFullYear()
+
+      return month === selectedMonth && year === selectedYear && selectedFrequency.includes(i.frequency)
+    })
+
+    const formatedData = filteredData.map((i: any) => {
+      return {
+        id: uuid(),
+        description: i.description,
+        amountFormatted: formatCurrency(Number(i.amount)),
+        frequency: i.frequency,
+        dateFormatted: formatDate(i.date),
+        tagColor: i.frequency === 'eventual' ? '#E44C4E' : '#4E41F0'
+      }
+    })
+    setData(formatedData)
+  }, [selectedYear, selectedMonth, selectedFrequency, typeFromUrl])
 
   const handleFrequencyClick = (frequency: string) => {
     const alreadySelected = selectedFrequency.findIndex(item => item === frequency)
@@ -169,11 +161,11 @@ const List: React.FC<IRouteParams> = ({ match }) => {
       <Content>
         
         {
-          data?.map(i => (
+          data?.map((i: any) => (
             <HistoryFinanceTrack 
               key={i.id}
               amount={i.amountFormatted}
-              subtitle={i.dataFormatted}
+              subtitle={i.dateFormatted}
               tagColor={i.tagColor}
               title={i.description}
             />
