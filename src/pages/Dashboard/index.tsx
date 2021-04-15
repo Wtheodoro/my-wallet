@@ -73,7 +73,7 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
           title={'Income'}
           amount={5000.00}
           footerLabel={'Atualizado com base nas entradas e saidas'}
-          icon='arrowUP'
+          icon='arrowUp'
           backgroundColor='#F7931B'
         />
         <WalletBox

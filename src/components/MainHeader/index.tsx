@@ -16,7 +16,7 @@ const MainHeader: React.FC = () => {
 
       <Profile>
         <Welcome>Olá, {emoji}</Welcome>
-        <UserName>Hayley Williams</UserName>
+        <UserName>Jennifer Carvalho The King of React</UserName>
       </Profile>
     </Container>
   )
