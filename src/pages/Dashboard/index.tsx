@@ -5,8 +5,9 @@ import expenses from '../../DB/expenses'
 import { IRouteParams } from '../List';
 import monthsList from '../../utils/months'
 
-import { Container } from './styles';
+import { Container, Content } from './styles';
 import SelectInput from '../../components/contentSet/SelectInput';
+import WalletBox from '../../components/contentSet/dashboardSet/WalletBox';
 
 const Dashboard: React.FC<IRouteParams> = ({ match }) => {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
@@ -59,6 +60,31 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
             defaultValue={selectedYear}
           />
       </ContentHeader>
+
+      <Content>
+        <WalletBox
+          title={'Balance'}
+          amount={150.00}
+          footerLabel={'Updated based on inputs and outputs'}
+          icon='dolar'
+          backgroundColor='#4E41F0'
+        />
+        <WalletBox
+          title={'Income'}
+          amount={5000.00}
+          footerLabel={'Atualizado com base nas entradas e saidas'}
+          icon='arrowUP'
+          backgroundColor='#F7931B'
+        />
+        <WalletBox
+          title={'Expenses'}
+          amount={4850.00}
+          footerLabel={'Atualizado com base nas entradas e saidas'}
+          icon='arrowDown'
+          backgroundColor='#E44C4E'
+        />
+      </Content>
+
     </Container>
   )
 }
