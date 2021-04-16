@@ -4,10 +4,13 @@ import gains from '../../DB/gains'
 import expenses from '../../DB/expenses'
 import { IRouteParams } from '../List';
 import monthsList from '../../utils/months'
-
 import { Container, Content } from './styles';
 import SelectInput from '../../components/contentSet/SelectInput';
 import WalletBox from '../../components/contentSet/dashboardSet/WalletBox';
+import MessageBox from '../../components/contentSet/dashboardSet/MessageBox';
+import happyImg from '../../assets/happy.svg'
+import sadImg from '../../assets/sad.svg'
+
 
 const Dashboard: React.FC<IRouteParams> = ({ match }) => {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
@@ -85,6 +88,12 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
         />
       </Content>
 
+      <MessageBox 
+        title="Very nice!"
+        description="our balance is positive"
+        footerText="Keep it up. You should consider investing"
+        icon={happyImg}
+      />
     </Container>
   )
 }
