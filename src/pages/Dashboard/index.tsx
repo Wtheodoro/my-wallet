@@ -10,6 +10,7 @@ import WalletBox from '../../components/contentSet/dashboardSet/WalletBox';
 import MessageBox from '../../components/contentSet/dashboardSet/MessageBox';
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
+import grinninImg from '../../assets/grinning.svg'
 
 
 const Dashboard: React.FC<IRouteParams> = ({ match }) => {
@@ -49,6 +50,66 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
     })
   }, [])
 
+  const totalExpenses = useMemo(() => {
+    let total: number = 0
+
+    expenses.map(i => {
+      const date = new Date(i.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      if (month === selectedMonth && year === selectedYear) {
+        total += Number(i.amount)
+      }
+    })
+
+    return total
+  }, [selectedMonth, selectedYear])
+
+  const totalIncomes = useMemo(() => {
+    let total: number = 0
+
+    gains.map(i => {
+      const date = new Date(i.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      if (month === selectedMonth && year === selectedYear) {
+        total += Number(i.amount)
+      }
+    })
+
+    return total
+  }, [selectedMonth, selectedYear])
+
+  const message = useMemo(() => {
+    if (totalIncomes-totalExpenses < 0) {
+      return {
+        title: 'Bad news',
+        description: 'Its balance is almost equal to Antarctica. Under zero.',
+        footerText: 'maybe you should think about saving a little money',
+        icon: sadImg
+      }
+
+    } else if(totalIncomes-totalExpenses === 0) {
+      return {
+        title: 'Zeros and zeros',
+        description: 'Balance is everything, but not when it comes to money.',
+        footerText: 'maybe you should think about saving a little money',
+        icon: grinninImg
+      }
+
+    } else {
+      return {
+        title: "Very nice!",
+        description: "Your balance is positive",
+        footerText: "Keep it up. You should consider investing",
+        icon: happyImg
+      }
+    }
+
+  }, [totalIncomes-totalExpenses])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#4E41F0">
@@ -67,21 +128,21 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       <Content>
         <WalletBox
           title={'Balance'}
-          amount={150.00}
+          amount={(totalIncomes - totalExpenses)}
           footerLabel={'Updated based on inputs and outputs'}
           icon='dolar'
           backgroundColor='#4E41F0'
         />
         <WalletBox
           title={'Income'}
-          amount={5000.00}
+          amount={totalIncomes}
           footerLabel={'Atualizado com base nas entradas e saidas'}
           icon='arrowUp'
           backgroundColor='#F7931B'
         />
         <WalletBox
           title={'Expenses'}
-          amount={4850.00}
+          amount={totalExpenses}
           footerLabel={'Atualizado com base nas entradas e saidas'}
           icon='arrowDown'
           backgroundColor='#E44C4E'
@@ -89,10 +150,10 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       </Content>
 
       <MessageBox 
-        title="Very nice!"
-        description="our balance is positive"
-        footerText="Keep it up. You should consider investing"
-        icon={happyImg}
+        title={message.title}
+        description={message.description}
+        footerText={message.footerText}
+        icon={message.icon}
       />
     </Container>
   )
