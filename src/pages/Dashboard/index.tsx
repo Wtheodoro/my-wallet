@@ -2,7 +2,6 @@ import React, { useMemo, useState } from 'react';
 import ContentHeader from '../../components/contentSet/ContentHeader';
 import gains from '../../DB/gains'
 import expenses from '../../DB/expenses'
-import { IRouteParams } from '../List';
 import monthsList from '../../utils/months'
 import { Container, Content } from './styles';
 import SelectInput from '../../components/contentSet/SelectInput';
@@ -11,13 +10,13 @@ import MessageBox from '../../components/contentSet/dashboardSet/MessageBox';
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinninImg from '../../assets/grinning.svg'
+import PieChart from '../../components/contentSet/dashboardSet/PieChart';
 
 
-const Dashboard: React.FC<IRouteParams> = ({ match }) => {
+const Dashboard: React.FC = () => {
   const [selectedMonth, setSelectedMonth] = useState<number>(new Date().getMonth() + 1)
   const [selectedYear, setSelectedYear] = useState<number>(new Date().getFullYear())
 
-  const { type } = match.params
 
   const years = useMemo(() => {
     let uniqueYears: number[] = []
@@ -39,7 +38,7 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       }
     })
 
-  }, [type])
+  }, [])
 
   const months = useMemo(() => {
     return monthsList.map((month, index) => {
@@ -61,6 +60,8 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       if (month === selectedMonth && year === selectedYear) {
         total += Number(i.amount)
       }
+
+      return total
     })
 
     return total
@@ -77,6 +78,8 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       if (month === selectedMonth && year === selectedYear) {
         total += Number(i.amount)
       }
+
+      return total
     })
 
     return total
@@ -108,7 +111,7 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
       }
     }
 
-  }, [totalIncomes-totalExpenses])
+  }, [totalIncomes, totalExpenses])
 
   return (
     <Container>
@@ -147,14 +150,18 @@ const Dashboard: React.FC<IRouteParams> = ({ match }) => {
           icon='arrowDown'
           backgroundColor='#E44C4E'
         />
+
+        <MessageBox 
+          title={message.title}
+          description={message.description}
+          footerText={message.footerText}
+          icon={message.icon}
+        />
+
+        <PieChart />
       </Content>
 
-      <MessageBox 
-        title={message.title}
-        description={message.description}
-        footerText={message.footerText}
-        icon={message.icon}
-      />
+      
     </Container>
   )
 }
