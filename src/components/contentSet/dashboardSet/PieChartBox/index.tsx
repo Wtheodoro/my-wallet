@@ -20,7 +20,7 @@ const PieChartBox: React.FC<IPieChartProps> = ({ data }) => (
         {
           data?.map(i => (
             <Indicator backgroundColor={i.color} key={i.name}>
-              <div>{`${i.percent}%`}</div>
+              <div>{i.percent}%</div>
               <span>{i.name}</span>
           </Indicator>
           )) 

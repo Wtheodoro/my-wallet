@@ -5,53 +5,43 @@ interface IIndicatorProps {
 }
 
 export const Container = styled.div`
-    width: 48%;
-    height: 16.5rem;
+    width: 100%;
+    height: 21.3rem;
     background-color: ${props => props.theme.colors.tertiary};
     color: ${props => props.theme.colors.font};
-    border-radius: 7px;
     margin: 0.6rem 0;
-    display: flex;
-`;
-
-export const LeftSide = styled.aside`
-    padding: 1.8rem 1.2rem;
+    padding: 1.5rem 1.3rem 4rem;
+    border-radius: 7px;
 
     > h2 {
-        margin-bottom: .5rem;
+        margin-bottom: 1.3rem;
     }
 `;
 
+export const Header = styled.header`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    > h2 {
+        margin-bottom: 1.3rem;
+        padding-left: 1rem;
+    }
+`;
 export const IndicatorContainer = styled.ul`
     list-style: none;
-    height: 90%;
+    display: flex;
     padding-right: 1rem;
-    overflow-y: scroll;
-
-    ::-webkit-scrollbar {
-        width: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-        background-color: ${props => props.theme.colors.secondary};
-        border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-        background-color: ${props => props.theme.colors.tertiary};
-        border-radius: 10px;
-    }
 `;
-
 export const Indicator = styled.li<IIndicatorProps>`
     display: flex;
     align-items: center;
-    margin-bottom: 0.5rem;
+    margin: 0 0 0.5rem 0.5rem;
 
     > div {
         background-color: ${props => props.backgroundColor};
-        width: 3.2rem;
-        height: 2.5rem;
+        width: 2rem;
+        height: 2rem;
         border-radius: 5px;
         font-size: 1.2rem;
         line-height: 2.5rem;
@@ -61,10 +51,4 @@ export const Indicator = styled.li<IIndicatorProps>`
     > span {
         margin-left: 0.3rem;
     }
-`;
-
-export const RightSide = styled.main`
-    display: flex;
-    flex: 1;
-    justify-content: center;
 `;

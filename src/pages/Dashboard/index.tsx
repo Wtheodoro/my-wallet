@@ -11,6 +11,7 @@ import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinninImg from '../../assets/grinning.svg'
 import PieChartBox from '../../components/contentSet/dashboardSet/PieChartBox';
+import LineChartBox from '../../components/contentSet/dashboardSet/LineChartBox';
 
 
 const Dashboard: React.FC = () => {
@@ -135,6 +136,53 @@ const Dashboard: React.FC = () => {
     return data
   },[totalIncomes, totalExpenses])
 
+  const historyData = useMemo(() => {
+    return monthsList.map((_, month) => {
+
+      let entryAmount = 0
+      let outputAmount = 0
+      gains.forEach(gain => {
+        const date = new Date(gain.date)
+        const gainMonth = date.getMonth()
+        const gainYear = date.getFullYear()
+        if (gainMonth === month && gainYear === selectedYear) {
+          try {
+            entryAmount += Number(gain.amount)
+          } catch {
+            throw new Error('Entryamount must be a valid number.')
+          }
+        }
+      });
+
+      expenses.forEach(expense => {
+        const date = new Date(expense.date)
+        const expenseMonth = date.getMonth()
+        const expenseYear = date.getFullYear()
+        if (expenseMonth === month && expenseYear === selectedYear) {
+          try {
+            outputAmount += Number(expense.amount)
+          } catch {
+            throw new Error('Entryamount must be a valid number.')
+          }
+        }
+      });
+
+      return {
+        monthNumber: month,
+        month: monthsList[month].substr(0, 3),
+        entryAmount,
+        outputAmount,
+      }
+
+    }) //concat loop methods. Can be done with .map but not with.forEach
+    .filter(item => {
+      const currentMonth = new Date().getMonth()
+      const currentYear = new Date().getFullYear()
+
+      return (selectedYear === currentYear && item.monthNumber <= currentMonth) || (selectedYear < currentYear)
+    })
+  }, [selectedYear])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#4E41F0">
@@ -181,6 +229,12 @@ const Dashboard: React.FC = () => {
         />
 
         <PieChartBox data={relationExpInc}/>
+
+        <LineChartBox 
+          data={historyData}
+          lineColorAmountEntry="#F7931B"
+          lineColorAmountOutput="#E44C4E"
+          />
       </Content>
 
       
