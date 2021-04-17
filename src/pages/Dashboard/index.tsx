@@ -10,7 +10,7 @@ import MessageBox from '../../components/contentSet/dashboardSet/MessageBox';
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinninImg from '../../assets/grinning.svg'
-import PieChart from '../../components/contentSet/dashboardSet/PieChart';
+import PieChartBox from '../../components/contentSet/dashboardSet/PieChartBox';
 
 
 const Dashboard: React.FC = () => {
@@ -60,10 +60,9 @@ const Dashboard: React.FC = () => {
       if (month === selectedMonth && year === selectedYear) {
         total += Number(i.amount)
       }
-
       return total
     })
-
+    
     return total
   }, [selectedMonth, selectedYear])
 
@@ -113,6 +112,29 @@ const Dashboard: React.FC = () => {
 
   }, [totalIncomes, totalExpenses])
 
+  const relationExpInc = useMemo(() => {
+    const total = totalExpenses + totalIncomes
+    const incPercent = (totalIncomes/total) * 100
+    const expPercent = (totalExpenses/total) * 100
+
+    const data = [
+      {
+        name: "Incomes",
+        value: totalIncomes,
+        percent: Number(incPercent.toFixed(1)),
+        color: '#F7931B'
+      },
+      {
+        name: "Expenses",
+        value: totalExpenses,
+        percent: Number(expPercent.toFixed(1)),
+        color: '#E44C4E'
+      },
+    ]
+
+    return data
+  },[totalIncomes, totalExpenses])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#4E41F0">
@@ -158,7 +180,7 @@ const Dashboard: React.FC = () => {
           icon={message.icon}
         />
 
-        <PieChart />
+        <PieChartBox data={relationExpInc}/>
       </Content>
 
       

@@ -63,6 +63,8 @@ export const Indicator = styled.li<IIndicatorProps>`
     }
 `;
 
-export const RightSide = styled.div`
-
+export const RightSide = styled.main`
+    display: flex;
+    flex: 1;
+    justify-content: center;
 `;
