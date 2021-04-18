@@ -12,6 +12,7 @@ import sadImg from '../../assets/sad.svg'
 import grinninImg from '../../assets/grinning.svg'
 import PieChartBox from '../../components/contentSet/dashboardSet/PieChartBox';
 import LineChartBox from '../../components/contentSet/dashboardSet/LineChartBox';
+import BarChartBox from '../../components/contentSet/dashboardSet/BarChartBox';
 
 
 const Dashboard: React.FC = () => {
@@ -183,6 +184,80 @@ const Dashboard: React.FC = () => {
     })
   }, [selectedYear])
 
+  const expRecurrentVersusEventual = useMemo(() => {
+    let recurrentAmount = 0
+    let eventualAmount = 0
+
+    expenses.filter((exp) => {
+      const date = new Date(exp.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      return month === selectedMonth && year === selectedYear
+    })
+    .forEach((exp) => {
+      if(exp.frequency === 'recurrent') {
+        return recurrentAmount += Number(exp.amount)
+      }
+
+      if (exp.frequency === 'eventual') {
+        return eventualAmount += Number(exp.amount)
+      }
+    })
+
+    return [
+      {
+        name: 'recurrent',
+        amount: recurrentAmount,
+        percent: Number( ((recurrentAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        color: "#F7931B"
+      },
+      {
+        name: 'eventual',
+        amount: eventualAmount,
+        percent: Number( ((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        color: "#E44C4E"
+      }
+    ]
+  }, [selectedYear, selectedMonth])
+
+  const incRecurrentVersusEventual = useMemo(() => {
+    let recurrentAmount = 0
+    let eventualAmount = 0
+
+    gains.filter((inc) => {
+      const date = new Date(inc.date)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1
+
+      return month === selectedMonth && year === selectedYear
+    })
+    .forEach((inc) => {
+      if(inc.frequency === 'recurrent') {
+        return recurrentAmount += Number(inc.amount)
+      }
+
+      if (inc.frequency === 'eventual') {
+        return eventualAmount += Number(inc.amount)
+      }
+    })
+
+    return [
+      {
+        name: 'recurrent',
+        amount: recurrentAmount,
+        percent: Number( ((recurrentAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        color: "#F7931B"
+      },
+      {
+        name: 'eventual',
+        amount: eventualAmount,
+        percent: Number( ((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        color: "#E44C4E"
+      }
+    ]
+  }, [selectedYear, selectedMonth])
+
   return (
     <Container>
       <ContentHeader title="Dashboard" lineColor="#4E41F0">
@@ -234,7 +309,17 @@ const Dashboard: React.FC = () => {
           data={historyData}
           lineColorAmountEntry="#F7931B"
           lineColorAmountOutput="#E44C4E"
-          />
+        />
+
+        <BarChartBox 
+          title="Expenses"
+          data={expRecurrentVersusEventual}
+        />
+
+        <BarChartBox 
+          title="Incomes"
+          data={incRecurrentVersusEventual}
+        />
       </Content>
 
       
