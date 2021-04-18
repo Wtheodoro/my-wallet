@@ -13,42 +13,41 @@ interface IBarChartProps {
   }[]
 }
 
-const BarChartBox: React.FC<IBarChartProps> = ({ title, data}) => {
-  return (
-    <Container>
-      <LeftSide>
-        <h2>{title}</h2>
-        <IndicatorContainer>
-          {
-            data?.map(i => (
-              <Indicator backgroundColor={i.color} key={i.name}>
-                <div>{i.percent}%</div>
-                <span>{i.name}</span>
-              </Indicator>
-            )) 
-          }
-        </IndicatorContainer> 
-      </LeftSide>
+// Stateless component
+const BarChartBox: React.FC<IBarChartProps> = ({ title, data}) => (
+  <Container>
+    <LeftSide>
+      <h2>{title}</h2>
+      <IndicatorContainer>
+        {
+          data?.map(i => (
+            <Indicator backgroundColor={i.color} key={i.name}>
+              <div>{i.percent}%</div>
+              <span>{i.name}</span>
+            </Indicator>
+          )) 
+        }
+      </IndicatorContainer> 
+    </LeftSide>
 
-      <RightSide>
-        <ResponsiveContainer>
-          <BarChart data={data}>
-          <Tooltip formatter={ formatCurrency } cursor={{ fill: 'none'}}/>
-            <Bar dataKey="amount" name="Amount">
-              {
-                data.map((i) => (
-                  <Cell 
-                    key={i.name}
-                    fill={i.color}
-                  />
-                ))
-              }
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </RightSide>
-    </Container>
-  )
-}
+    <RightSide>
+      <ResponsiveContainer>
+        <BarChart data={data}>
+        <Tooltip formatter={ formatCurrency } cursor={{ fill: 'none'}}/>
+          <Bar dataKey="amount" name="Amount">
+            {
+              data.map((i) => (
+                <Cell 
+                  key={i.name}
+                  fill={i.color}
+                />
+              ))
+            }
+          </Bar>
+        </BarChart>
+      </ResponsiveContainer>
+    </RightSide>
+  </Container>
+)
 
 export default BarChartBox;

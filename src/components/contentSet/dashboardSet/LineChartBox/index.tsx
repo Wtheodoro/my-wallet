@@ -3,7 +3,7 @@ import formatCurrency from '../../../../utils/formatCurrency'
 import { ResponsiveContainer, LineChart, Line, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import { Container, Header, IndicatorContainer, Indicator } from './styles';
 
-interface IHistoryBoxProps {
+interface ILineChartBoxProps {
   data: {
     month: string
     entryAmount: number
@@ -14,7 +14,7 @@ interface IHistoryBoxProps {
   lineColorAmountOutput: string
 }
 
-const LineChartBox: React.FC<IHistoryBoxProps> = ({ data, lineColorAmountEntry, lineColorAmountOutput }) => (
+const LineChartBox: React.FC<ILineChartBoxProps> = ({ data, lineColorAmountEntry, lineColorAmountOutput }) => (
   <Container>
     <Header>
       <h2>Balance history</h2>
