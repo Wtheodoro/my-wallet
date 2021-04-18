@@ -1,5 +1,5 @@
-import { Interface } from 'node:readline';
 import React from 'react';
+import formatCurrency from '../../../../utils/formatCurrency'
 import { ResponsiveContainer, LineChart, Line, XAxis, CartesianGrid, Tooltip } from 'recharts'
 import { Container, Header, IndicatorContainer, Indicator } from './styles';
 
@@ -35,7 +35,7 @@ const LineChartBox: React.FC<IHistoryBoxProps> = ({ data, lineColorAmountEntry, 
       <LineChart data={data} margin={{ top: 5, right: 20, left: 20, bottom: 5}}>
         <CartesianGrid strokeDasharray="3 3" stroke="#CECECE"/>
         <XAxis dataKey="month" stroke="#CECECE" />
-        <Tooltip/>
+        <Tooltip formatter={ formatCurrency }/>
         <Line 
           type="monotone"
           dataKey="outputAmount"
