@@ -49,6 +49,7 @@ const expenses = [
   {"description":"Cafeteira",             "amount":"250.00","type":"saída","frequency":"eventual",  "date":"2015-07-26"},
   {"description":"Pizza",                 "amount":"60.00", "type":"saída","frequency":"eventual",  "date":"2000-07-19"},
   {"description":"Preço abusivo p/ teste",                 "amount":"10000.00", "type":"saída","frequency":"eventual",  "date":"2021-04-19"},
+  {"description":"Preço abusivo p/ teste",                 "amount":"100000.00", "type":"saída","frequency":"eventual",  "date":"2021-12-19"},
 ]
 
 export default expenses

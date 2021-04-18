@@ -10,6 +10,7 @@ import MessageBox from '../../components/contentSet/dashboardSet/MessageBox';
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinninImg from '../../assets/grinning.svg'
+import opsImg from '../../assets/ops.svg'
 import PieChartBox from '../../components/contentSet/dashboardSet/PieChartBox';
 import LineChartBox from '../../components/contentSet/dashboardSet/LineChartBox';
 import BarChartBox from '../../components/contentSet/dashboardSet/BarChartBox';
@@ -91,23 +92,31 @@ const Dashboard: React.FC = () => {
       return {
         title: 'Bad news',
         description: 'Its balance is almost equal to Antarctica. Under zero.',
-        footerText: 'maybe you should think about saving a little money',
+        footerText: 'maybe you should think about saving a little money.',
         icon: sadImg
+      }
+
+    } else if(totalIncomes === 0 && totalExpenses === 0) {
+      return {
+        title: 'Ooops',
+        description: 'there is no financial record this month.',
+        footerText: 'It was not possible to find Incomes or Expenses in the selected month and year',
+        icon: opsImg
       }
 
     } else if(totalIncomes-totalExpenses === 0) {
       return {
         title: 'Zeros and zeros',
         description: 'Balance is everything, but not when it comes to money.',
-        footerText: 'maybe you should think about saving a little money',
+        footerText: 'maybe you should think about saving a little money.',
         icon: grinninImg
       }
 
     } else {
       return {
         title: "Very nice!",
-        description: "Your balance is positive",
-        footerText: "Keep it up. You should consider investing",
+        description: "Your balance is positive.",
+        footerText: "Keep it up. You should consider investing.",
         icon: happyImg
       }
     }
@@ -116,20 +125,20 @@ const Dashboard: React.FC = () => {
 
   const relationExpInc = useMemo(() => {
     const total = totalExpenses + totalIncomes
-    const incPercent = (totalIncomes/total) * 100
-    const expPercent = (totalExpenses/total) * 100
+    const incPercent = Number(((totalIncomes/total) * 100).toFixed(1))
+    const expPercent = Number(((totalExpenses/total) * 100).toFixed(1))
 
     const data = [
       {
         name: "Incomes",
         value: totalIncomes,
-        percent: Number(incPercent.toFixed(1)),
+        percent: incPercent ? incPercent : 0,
         color: '#F7931B'
       },
       {
         name: "Expenses",
         value: totalExpenses,
-        percent: Number(expPercent.toFixed(1)),
+        percent: expPercent ? expPercent : 0,
         color: '#E44C4E'
       },
     ]
@@ -205,17 +214,20 @@ const Dashboard: React.FC = () => {
       }
     })
 
+    const recurrentPercent = Number(((recurrentAmount/(recurrentAmount+eventualAmount)) * 100).toFixed(1))
+    const eventualPercent = Number(((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1))
+
     return [
       {
         name: 'recurrent',
         amount: recurrentAmount,
-        percent: Number( ((recurrentAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        percent: recurrentPercent ? recurrentPercent : 0,
         color: "#F7931B"
       },
       {
         name: 'eventual',
         amount: eventualAmount,
-        percent: Number( ((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        percent: eventualPercent ? eventualPercent : 0,
         color: "#E44C4E"
       }
     ]
@@ -242,17 +254,20 @@ const Dashboard: React.FC = () => {
       }
     })
 
+    const recurrentPercent = Number(((recurrentAmount/(recurrentAmount+eventualAmount)) * 100).toFixed(1))
+    const eventualPercent = Number(((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1))
+
     return [
       {
         name: 'recurrent',
         amount: recurrentAmount,
-        percent: Number( ((recurrentAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        percent: recurrentPercent ? recurrentPercent : 0,
         color: "#F7931B"
       },
       {
         name: 'eventual',
         amount: eventualAmount,
-        percent: Number( ((eventualAmount/(recurrentAmount + eventualAmount)) * 100).toFixed(1) ),
+        percent: eventualPercent ? eventualPercent : 0,
         color: "#E44C4E"
       }
     ]
