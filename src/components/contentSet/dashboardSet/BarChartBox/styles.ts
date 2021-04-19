@@ -13,7 +13,13 @@ export const Container = styled.div`
     border-radius: 7px;
     display: flex;
     justify-content: space-between;
-    /* align-items: center; */
+
+    @media(max-width: 540px) {
+        width: 100%;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+    }
 `;
 
 export const LeftSide = styled.aside`
@@ -53,6 +59,12 @@ export const IndicatorContainer = styled.ul`
         background-color: ${props => props.theme.colors.tertiary};
         border-radius: 10px;
     }
+
+    @media(max-width: 540px) {
+        width: 100%;
+        height: auto;
+        display: flex;
+    }
 `;
 
 export const Indicator = styled.li<IIndicatorProps>`
@@ -74,5 +86,14 @@ export const Indicator = styled.li<IIndicatorProps>`
 
     > span {
         margin-left: 0.3rem;
+    }
+
+    @media(max-width: 540px) {
+        > div {
+            width: 2rem;
+            height: 2rem;
+            font-size: .7rem;
+            line-height: 2rem;
+        }
     }
 `;

@@ -27,6 +27,14 @@ export const Header = styled.header`
         margin-bottom: 1.3rem;
         padding-left: 1rem;
     }
+
+    @media(max-width: 768px) {
+        flex-direction: column;
+
+        > h2 {
+            margin-bottom: .6rem;
+        }
+    }
 `;
 export const IndicatorContainer = styled.ul`
     list-style: none;
@@ -36,7 +44,7 @@ export const IndicatorContainer = styled.ul`
 export const Indicator = styled.li<IIndicatorProps>`
     display: flex;
     align-items: center;
-    margin: 0 0 0.5rem 0.5rem;
+    margin: 0 0 .5rem 1rem;
 
     > div {
         background-color: ${props => props.backgroundColor};
@@ -50,5 +58,13 @@ export const Indicator = styled.li<IIndicatorProps>`
 
     > span {
         margin-left: 0.3rem;
+    }
+
+    @media(max-width: 768px) {
+
+        > div {
+            width: 1.5rem;
+            height: 1.5rem;
+        }
     }
 `;

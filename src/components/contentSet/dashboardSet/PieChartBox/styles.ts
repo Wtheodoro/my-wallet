@@ -12,20 +12,40 @@ export const Container = styled.div`
     border-radius: 7px;
     margin: 0.6rem 0;
     display: flex;
+
+    @media(max-width: 540px) {
+        display: flex;
+        width: 100%;
+    }
 `;
 
 export const LeftSide = styled.aside`
-    padding: 1.8rem 1.2rem;
+    padding: 1.8rem 0 1.8rem 1.2rem;
 
     > h2 {
+        margin-bottom: 1.5rem;
+    }
+
+    @media(max-width: 1345px) {
+        padding: 0 .9rem .3rem;
+        margin-bottom: .5rem;
+
+        > h2 {
+            margin-top: 1rem;
+            margin-bottom: .5rem;
+        }
+    }
+
+    @media(max-width: 768px) {
+        padding: 1rem;
         margin-bottom: .5rem;
     }
 `;
 
 export const IndicatorContainer = styled.ul`
     list-style: none;
-    height: 90%;
-    padding-right: 1rem;
+    height: 80%;
+    padding-right: 1rem 0;
     overflow-y: scroll;
 
     ::-webkit-scrollbar {
@@ -40,6 +60,11 @@ export const IndicatorContainer = styled.ul`
     ::-webkit-scrollbar-track {
         background-color: ${props => props.theme.colors.tertiary};
         border-radius: 10px;
+    }
+
+    @media(max-width: 1345px) {
+        display: flex;
+        flex-direction: column;
     }
 `;
 
@@ -61,10 +86,23 @@ export const Indicator = styled.li<IIndicatorProps>`
     > span {
         margin-left: 0.3rem;
     }
+
+    @media(max-width: 768px) {
+        font-size: .9rem;
+        margin: .2rem 0;
+
+        > span {
+            margin-left: .5rem;
+        }
+    }
 `;
 
 export const RightSide = styled.main`
     display: flex;
     flex: 1;
     justify-content: center;
+
+    @media(max-width: 1345px) {
+        height: 100%;
+    }
 `;

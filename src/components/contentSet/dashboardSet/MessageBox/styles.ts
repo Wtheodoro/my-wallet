@@ -21,4 +21,30 @@ export const Container = styled.div`
     > header p {
         font-size: 1.2rem;
     }
+
+    @media(max-width: 768px) {
+
+        > header h1 {
+            font-size: 1.5rem;
+
+            img {
+                height: 1.3rem;
+                width: 1.3rem;
+            }
+        }
+
+        > header p,
+        > footer span {
+            font-size: .9rem;
+        }
+    }
+
+    @media(max-width: 540px) {
+        width: 100%;
+        height: auto;
+
+        > header p {
+            margin-bottom: 1rem;
+        }
+    }
 `;
