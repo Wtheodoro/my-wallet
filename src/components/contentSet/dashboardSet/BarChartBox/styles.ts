@@ -1,9 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IIndicatorProps {
     backgroundColor: string
 }
 
+const animate = keyframes`
+    0% {
+        transform: translateX(+100px);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: .5;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`
 export const Container = styled.div`
     width: 48%;
     min-height: 16rem;
@@ -13,6 +28,8 @@ export const Container = styled.div`
     border-radius: 7px;
     display: flex;
     justify-content: space-between;
+    
+    animation: ${animate} .8s ease;
 
     @media(max-width: 540px) {
         width: 100%;

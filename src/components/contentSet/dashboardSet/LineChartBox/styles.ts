@@ -1,8 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 interface IIndicatorProps {
     backgroundColor: string
 }
+
+const animate = keyframes`
+    0% {
+        transform: translateX(-100px);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: .5;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+`
 
 export const Container = styled.div`
     width: 100%;
@@ -16,6 +32,8 @@ export const Container = styled.div`
     > h2 {
         margin-bottom: 1.3rem;
     }
+
+    animation: ${animate} .8s ease;
 `;
 
 export const Header = styled.header`
