@@ -1,6 +1,6 @@
 # My Wallet - An React Web Application
 
-All your income and expenses on an online platform with [My Wallet]("linkdeploy").
+All your income and expenses on an online platform with [My Wallet](https://angry-snyder-26ff9d.netlify.app/).
 
 ![GIF](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/my-walletGIF.gif)
 
@@ -10,7 +10,7 @@ we all love numbers and animated graphics, but sometimes our bank accounts don't
 
 ## `Step by step to run this project`
 
-### Clone
+### `clone`
 You can clone by using git clone on your terminal:
 
     git clone https://github.com/Wtheodoro/my_wallet
