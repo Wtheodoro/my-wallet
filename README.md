@@ -4,6 +4,9 @@ All your income and expenses on an online platform with [My Wallet](https://angr
 
 ![GIF](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/my-walletGIF.gif)
 
+The application was also created with responsiveness in mind.
+![GIFmobile](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/mobile.gif)
+
 we all love numbers and animated graphics, but sometimes our bank accounts don't give us that on their platforms (like mine).
 
 **This is for study end practice ONLY** Some bank platforms offer a worthwhile type of digital wallet. This project ** DOES NOT ** have integration with any other application, the data is entered manually. Feel free to clone this repository and integrate with your own backend or any other integration. From now on it is up to you.
