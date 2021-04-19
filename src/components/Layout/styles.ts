@@ -19,4 +19,7 @@ export const Grid = styled.div`
         'MainHeader'
         'Content';
     }
+
+    /* Just to block screen smaller than 315px */
+    min-width: 315px;
 `;

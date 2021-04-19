@@ -10,13 +10,24 @@ export const Container = styled.div`
     align-items: center;
 
     padding: 0 0.8rem;
-    border-bottom: 1px solid ${props => props.theme.colors.gray}
+    border-bottom: 1px solid ${props => props.theme.colors.gray};
+
+    @media(max-width: 768px) {
+        justify-content: flex-end;    
+    }
 `;
 
 export const Profile = styled.div`
-    color: ${props => props.theme.colors.font}
+    color: ${props => props.theme.colors.font};
 `
 
 export const Welcome = styled.h3``
 
 export const UserName = styled.span``
+
+export const ToggleContainer = styled.div`
+    @media(max-width: 768px) {
+        display: none;     
+    }
+`;
+
