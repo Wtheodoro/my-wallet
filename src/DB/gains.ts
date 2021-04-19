@@ -7,7 +7,7 @@ const gains = [
   { "description": "First part Salary",     "amount": "12500.53", "type": "entrada", "frequency": "recurrent", "date": "2021-04-5" }, 
   { "description": "Salário",     "amount": "2500.15", "type": "entrada", "frequency": "recurrent", "date": "2020-05-10" }, 
   { "description": "Salário",     "amount": "2500.12", "type": "entrada", "frequency": "recurrent", "date": "2020-06-10" }, 
-  { "description": "Salário",     "amount": "2500.00", "type": "entrada", "frequency": "recurrent", "date": "1500-07-10" },
+  { "description": "Salário",     "amount": "2500.00", "type": "entrada", "frequency": "recurrent", "date": "2020-07-10" },
   {
     "description": "Freelance",
     "amount": "3750.43",
