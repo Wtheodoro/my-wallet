@@ -30,6 +30,11 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
     npm start
 
 
+### `Sign In`
+Here is a e-mail and password to sign in.
+- helen@facebook.com
+- 123456
+
 ### `npm run build`
 **In case you want to build the project**
 Builds the app for production to the `build` folder.\
