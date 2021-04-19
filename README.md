@@ -4,7 +4,7 @@ All your income and expenses on an online platform with [My Wallet](https://angr
 
 ![GIF](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/my-walletGIF.gif)
 
-The application was also created with responsiveness in mind.
+The application was also created with responsiveness in mind.(space, space)
 ![GIFmobile](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/mobile.gif)
 
 we all love numbers and animated graphics, but sometimes our bank accounts don't give us that on their platforms (like mine).
