@@ -1,6 +1,6 @@
 # My Wallet - An React Web Application
 
-All your income and expenses on an online platform with [My Wallet](https://angry-snyder-26ff9d.netlify.app/).
+All your income and expenses on an online platform with [My Wallet](https://6083202851c5ac1153127626--angry-snyder-26ff9d.netlify.app/).
 
 ![GIF](https://github.com/Wtheodoro/my_wallet/blob/main/public/Gif/my-walletGIF.gif)
 
